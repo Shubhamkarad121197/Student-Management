@@ -1,7 +1,9 @@
 package com.Shubham.Student_Management.Controller;
 
+import com.Shubham.Student_Management.DTO.StudentRequestDTO;
 import com.Shubham.Student_Management.Model.Student;
 import com.Shubham.Student_Management.Service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,7 +20,11 @@ public class StudentController {
         this.studentService=studentService;
     }
     @PostMapping("/students")
-    public Student addStudent(@RequestBody Student student){
+    public Student addStudent(@Valid @RequestBody StudentRequestDTO requestDTO){
+      Student student=new Student();
+      student.setName(requestDTO.getName());
+      student.setEmail(requestDTO.getEmail());
+
       return studentService.addStudent(student);
     }
 
@@ -33,8 +39,14 @@ public class StudentController {
     }
 
     @PutMapping("/students/{id}")
-    public Student updateStudent(@PathVariable Integer id ,@RequestBody Student updatedStudent){
-       return studentService.updateStudent(id,updatedStudent);
+    public Student updateStudent(@PathVariable Integer id ,@Valid @RequestBody StudentRequestDTO requestDTO){
+        Student student=new Student();
+        student.setName(requestDTO.getName());
+        student.setEmail(requestDTO.getEmail());
+
+        return studentService.updateStudent(id,student);
+
+
 
     }
 
