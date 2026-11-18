@@ -14,5 +14,7 @@ public interface StudentService {
 
     void deleteStudent(Integer id);
 
+    Student enrollStudentInCourse(Integer studentId, Integer courseId);
+
 
 }

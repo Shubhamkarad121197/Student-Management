@@ -1,14 +1,58 @@
 package com.Shubham.Student_Management.Model;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="students")
 public class Student {
 
+
+
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_courses",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Course> courses = new ArrayList<>();
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public void addCourse(Course course) {
+        courses.add(course);
+    }
+
+    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String email;
 
 
@@ -25,7 +69,7 @@ public class Student {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(Integer id){
         this.id=id;
     }
     public String getName(){
@@ -42,5 +86,10 @@ public class Student {
     public void setEmail(String email){
         this.email=email;
     }
+
+
+
+
+
 
 }

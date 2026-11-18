@@ -56,5 +56,11 @@ public class StudentController {
         studentService.deleteStudent(id);
     }
 
+    @PostMapping("/students/{studentId}/courses/{courseId}")
+    public Student enrollStudentInCourse(
+            @PathVariable Integer studentId,
+            @PathVariable Integer courseId) {
 
+        return studentService.enrollStudentInCourse(studentId, courseId);
+    }
 }
